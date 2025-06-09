@@ -111,6 +111,7 @@ OrderItem은 각각 Order와 Item에 대해 **다대일(N:1)** 관계를 맺고 
   | **DTO**          | 요청/응답 데이터 전달 객체      | API 요청 및 응답용 데이터 구조 정의                           |
 
 🗂️ com.ssg.ssg.global
+
 **전역적이고 재사용 가능한 설정과 예외 처리 등을 담당**
   - exception: 공통 예외 처리
   - code: 전역 에러 코드 관리 클래스 (ErrorCode)
