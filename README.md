@@ -81,8 +81,8 @@
 ## 🏗️ 3. 아키텍처 및 설계 고려사항
 
 ### 🔹 도메인 모델링
-- `ItemEntity`: 상품 정보 (재고, 가격, 할인가)
-- `OrderEntity`: 주문 정보 (총 금액, 주문 상품 리스트)
-- `OrderItemEntity`: 주문 내 개별 상품 (수량, 상태)
+- `ItemEntity`: 상품 정보
+- `OrderEntity`: 주문 정보
+- `OrderItemEntity`: 주문 내 개별 상품
 
 ### 🔹 계층 분리 구조
