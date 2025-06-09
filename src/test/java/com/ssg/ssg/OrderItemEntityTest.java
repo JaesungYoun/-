@@ -18,7 +18,7 @@ class OrderItemEntityTest {
     @Test
     void createOrderItem_주문_상품_생성() {
         /** Given */
-        ItemEntity item = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000);
+        ItemEntity item = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000, 1L);
 
         Integer quantity = 3;
         Integer expectedPurchasePrice = quantity * (item.getPrice() - item.getDiscountPrice());
@@ -36,7 +36,7 @@ class OrderItemEntityTest {
     @Test
     void cancel_주문_상품_취소_정상() {
         /** Given */
-        ItemEntity item = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000);
+        ItemEntity item = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000, 1L);
         OrderEntity order = new OrderEntity(1L, 7000, new ArrayList<>());
         OrderItemEntity orderItem = new OrderItemEntity(1L, order, item, 10, 7000, OrderStatus.ORDER);
 
@@ -61,7 +61,7 @@ class OrderItemEntityTest {
     void cancel_이미_취소된_상품_재취소_예외() {
         /** Given */
 
-        ItemEntity item = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000);
+        ItemEntity item = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000, 1L);
         OrderEntity order = new OrderEntity(1L, 7000, new ArrayList<>());
         OrderItemEntity orderItem = new OrderItemEntity(1L, order, item, 10, 7000, OrderStatus.ORDER);
 

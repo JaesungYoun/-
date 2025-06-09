@@ -35,6 +35,9 @@ public class ItemEntity {
     @Column(name = "stock")
     private Integer stock; // 재고
 
+    @Version
+    private Long version;
+
     // 재고 차감 및 복구
     public void decreaseStock(Integer quantity) {
         if (this.stock < quantity) throw new BadRequestException(ErrorCode.OUT_OF_STOCK);

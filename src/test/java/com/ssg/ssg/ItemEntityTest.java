@@ -14,7 +14,7 @@ class ItemEntityTest {
     @Test
     void decreaseStock_재고차감_성공() {
         /** Given */
-        ItemEntity item = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000);
+        ItemEntity item = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000,1L);
 
         /** When */
         item.decreaseStock(10);
@@ -26,7 +26,7 @@ class ItemEntityTest {
     @Test
     void decreaseStock_재고부족_예외() {
         /** Given */
-        ItemEntity item = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000);
+        ItemEntity item = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000, 1L);
 
         /** When & Then */
         // 예외 발생 검증
@@ -39,7 +39,7 @@ class ItemEntityTest {
     @Test
     void getPurchasePrice_할인적용된_실구매금액_계산() {
         /** Given */
-        ItemEntity item = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000);
+        ItemEntity item = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000, 1L);
 
         Integer expectedPurchasePrice = 700;
 

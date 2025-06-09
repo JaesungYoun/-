@@ -20,7 +20,7 @@ public interface OrderControllerDoc {
     ResponseEntity<CreateOrderResponse> createOrder(@RequestBody @Valid CreateOrderRequest request);
     @Operation(summary = "주문 상품 개별 취소", description = "주문 상품을 개별로 취소합니다.")
 
-    ResponseEntity<CancelOrderItemResponse> cancelOrderItem(@RequestBody @Valid CancelOrderItemRequest request);
+    ResponseEntity<CancelOrderItemResponse> cancelOrderItem(@RequestBody @Valid CancelOrderItemRequest request) throws InterruptedException;
     @Operation(summary = "주문 상품 조회", description = "주문 상품을 조회합니다.")
 
     ResponseEntity<GetOrderResponse> getOrder(@PathVariable Long orderId);

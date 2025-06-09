@@ -17,10 +17,12 @@ public enum ErrorCode {
     ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 상품입니다."),
     ORDER_ITEM_NOT_FOUND(HttpStatus.NOT_FOUND, "주문 내 해당 상품이 존재하지 않습니다."),
 
+    CONCURRENCY_EXCEPTION(HttpStatus.CONFLICT, "동시에 리소스를 수정하려하여 에러가 발생하였습니다."),
+
     // 서버 예외
     EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "오류가 발생하였습니다."),
     RUNTIME_EXCEPTION(HttpStatus.INTERNAL_SERVER_ERROR, "오류가 발생하였습니다.");
-    
+
     private final HttpStatus status;
     private final String message;
 

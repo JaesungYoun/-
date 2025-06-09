@@ -15,9 +15,9 @@ class OrderEntityTest {
     @Test
     void createOrder_주문상품_리스트로_주문_생성() {
         /** Given */
-        ItemEntity item1 = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000);
+        ItemEntity item1 = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000, 1L);
 
-        ItemEntity item2 = new ItemEntity(1000000002L, "신라면 멀티팩", 4200, 500, 500);
+        ItemEntity item2 = new ItemEntity(1000000002L, "신라면 멀티팩", 4200, 500, 500, 1L);
 
         OrderItemEntity orderItem1 = OrderItemEntity.createOrderItem(item1, 10, item1.getPurchasePrice());
         OrderItemEntity orderItem2 = OrderItemEntity.createOrderItem(item2, 20, item2.getPurchasePrice());
@@ -44,9 +44,9 @@ class OrderEntityTest {
     @Test
     void calculateTotalPrice_전체_주문금액_계산() {
         /** Given */
-        ItemEntity item1 = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000);
+        ItemEntity item1 = new ItemEntity(1000000001L, "이마트 생수", 800, 100, 1000, 1L);
 
-        ItemEntity item2 = new ItemEntity(1000000002L, "신라면 멀티팩", 4200, 500, 500);
+        ItemEntity item2 = new ItemEntity(1000000002L, "신라면 멀티팩", 4200, 500, 500, 1L);
 
         // 주문 상품 생성
         OrderItemEntity orderItem1 = OrderItemEntity.createOrderItem(item1, 10, item1.getPurchasePrice());

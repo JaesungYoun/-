@@ -9,6 +9,7 @@ import com.ssg.ssg.domain.order.entity.ItemEntity;
 import com.ssg.ssg.domain.order.entity.OrderEntity;
 import com.ssg.ssg.domain.order.entity.OrderItemEntity;
 import com.ssg.ssg.domain.order.enums.OrderStatus;
+import com.ssg.ssg.domain.order.facade.OrderServiceFacade;
 import com.ssg.ssg.domain.order.repository.ItemRepository;
 import com.ssg.ssg.domain.order.repository.OrderItemRepository;
 import com.ssg.ssg.domain.order.repository.OrderRepository;
@@ -41,6 +42,9 @@ class OrderServiceTest {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private OrderServiceFacade orderServiceFacade;
 
     @Autowired
     private ItemRepository itemRepository;

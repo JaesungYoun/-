@@ -46,7 +46,7 @@ public class OrderService {
                 .toList();
 
         // IN 쿼리 조회
-        List<ItemEntity> items = itemRepository.findAllById(itemIds);
+        List<ItemEntity> items = itemRepository.findAllByIdIn(itemIds);
 
         // List → Map 변환
         Map<Long, ItemEntity> itemMap = items.stream()
@@ -95,7 +95,7 @@ public class OrderService {
         OrderEntity order = orderRepository.findById(request.getOrderId())
                 .orElseThrow(() -> new NotFoundException(ErrorCode.ORDER_NOT_FOUND));
 
-        ItemEntity item = itemRepository.findById(request.getItemId())
+        ItemEntity item = itemRepository.findByIdWithOptimisticLock(request.getItemId())
                 .orElseThrow(() -> new NotFoundException(ErrorCode.ITEM_NOT_FOUND));
 
         OrderItemEntity orderItem = orderItemRepository.findByOrderAndItem(order, item)
