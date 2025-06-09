@@ -85,4 +85,18 @@
 - `OrderEntity`: 주문 정보
 - `OrderItemEntity`: 주문 내 개별 상품
 
-### 🔹 계층 분리 구조
+### 🔹 프로젝트 구조
+
+🗂️ com.ssg.ssg.domain
+**도메인(order)에 대한 핵심 비즈니스 로직을 담당**
+  - entity: 주문, 주문상품, 상품 등 JPA 엔티티
+  - dto: 요청(Request), 응답(Response)용 DTO 클래스
+  - repository: JPA 기반 데이터 접근 계층
+  - service: 비즈니스 로직을 처리하는 서비스 계층
+  - controller: REST API 요청을 처리하는 컨트롤러
+
+🗂️ com.ssg.ssg.global
+**전역적이고 재사용 가능한 설정과 예외 처리 등을 담당**
+  - exception: 공통 예외 처리 (NotFoundException, GlobalExceptionHandler 등)
+  - code: 전역 에러 코드 관리 클래스 (ErrorCode)
+  - config: Swagger 설정 등 전역 설정 클래스
