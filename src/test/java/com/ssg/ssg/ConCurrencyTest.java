@@ -120,7 +120,7 @@ class ConCurrencyTest {
         ExecutorService executorService = Executors.newFixedThreadPool(32);
         CountDownLatch latch = new CountDownLatch(orderCount);
 
-        // 3. 각 주문별로 취소 요청을 병렬로 실행
+        // 각 주문별로 취소 요청을 병렬로 실행
         for (Long orderId : orderIds) {
             CancelOrderItemRequest cancelRequest = new CancelOrderItemRequest(orderId, itemId);
             executorService.submit(() -> {
@@ -137,7 +137,7 @@ class ConCurrencyTest {
         latch.await();
 
         /** Then **/
-        // 4. 재고가 100만큼 증가했는지 확인
+        // 재고가 100만큼 증가했는지 검증
         ItemEntity updatedItem = itemRepository.findById(itemId)
                 .orElseThrow(() -> new NotFoundException(ErrorCode.ITEM_NOT_FOUND));
 
