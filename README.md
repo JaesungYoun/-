@@ -123,5 +123,5 @@ OrderItem은 각각 Order와 Item에 대해 **다대일(N:1)** 관계를 맺고 
   - config: Swagger 설정 등 전역 설정 클래스
 
 
-
-Swagger UI 경로: `/swagger-ui/index.html`
+📄 API 문서화
+- Swagger UI 경로: `/swagger-ui/index.html`
