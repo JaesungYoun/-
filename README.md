@@ -85,6 +85,22 @@
 - `OrderEntity`: 주문 정보
 - `OrderItemEntity`: 주문 내 개별 상품
 
+- 하나의 주문(`Order`)은 여러 개의 주문상품(`OrderItem`)을 포함
+- 하나의 상품(`Item`)은 여러 주문에 포함
+- Order와 Item은 N:M(다대다) 관계에 해당하며, 이 관계를 명시적으로 표현하기 위해 OrderItem 엔티티를 연결 테이블(연결 엔티티)로 설정
+OrderItem은 각각 Order와 Item에 대해 다대일(N:1) 관계를 맺고 있어, 결과적으로 두 개의 다대일 관계를 통해 다대다 관계를 구현한 구조
+
+### 💡 설계 의도 및 고려사항
+
+- `OrderItem`은 단순한 중간 테이블로서의 역할 뿐만 아니라 
+  - **주문 수량**
+  - **상품별 할인금액**
+  - **실구매가**
+  - **취소 여부**
+    등의 필드들을 개별적으로 관리
+- **연결 엔티티 방식(Many-to-One 양방향 관계)** 으로 매핑
+- 성능 최적화를 위해 `OrderItem`에 `@ManyToOne(fetch = LAZY)` 전략을 사용하여 지연 로딩을 적용
+
 ### 🔹 프로젝트 구조
 
 🗂️ com.ssg.ssg.domain
@@ -100,3 +116,7 @@
   - exception: 공통 예외 처리 (NotFoundException, GlobalExceptionHandler 등)
   - code: 전역 에러 코드 관리 클래스 (ErrorCode)
   - config: Swagger 설정 등 전역 설정 클래스
+
+
+
+Swagger UI 경로: `/swagger-ui/index.html`
