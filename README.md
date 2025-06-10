@@ -121,3 +121,7 @@ OrderItem은 각각 Order와 Item에 대해 **다대일(N:1)** 관계를 맺고 
 
 ### 📄 API 문서화
 - Swagger UI 경로: `/swagger-ui/index.html`
+
+### ✅ 테스트
+- 서비스 통합 테스트(기능 수행 후 실제 DB 및 DTO값 검증)
+- 주요 기능 단위 테스트
