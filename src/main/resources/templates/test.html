@@ -1,53 +1,62 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
     <title>주문 API 테스트</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        h1, h2 { color: #333; }
-        section { margin-bottom: 40px; }
-        label { display: inline-block; width: 80px; }
-        input[type=number] { width: 150px; padding: 5px; margin-right: 10px; }
-        button { padding: 6px 12px; cursor: pointer; }
-        table { border-collapse: collapse; margin-top: 10px; width: 100%; max-width: 700px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background-color: #f8f8f8; }
-        .error { color: #c00; font-weight: bold; margin-top: 10px; }
-        .success { color: #080; font-weight: bold; margin-top: 10px; }
         .item-row { margin-bottom: 5px; }
+        table {
+            border-collapse: collapse;
+            margin-top: 10px;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #aaa;
+            padding: 5px 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        button {
+            margin-top: 5px;
+        }
+        .error {
+            color: red;
+            margin-top: 10px;
+        }
+        .success {
+            color: green;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
 <h1>🛒 주문 API 테스트 화면</h1>
 
 <!-- 주문 생성 -->
-<section>
+<section style="margin-bottom: 30px;">
     <h2>1. 주문 생성 (여러 상품)</h2>
     <form id="createOrderForm">
         <div id="itemList">
             <div class="item-row">
-                <label>상품 ID:</label>
-                <input type="number" name="itemId" required />
-                <label>수량:</label>
-                <input type="number" name="quantity" value="1" min="1" required />
+                상품 ID: <input type="number" name="itemId" required>
+                수량: <input type="number" name="quantity" value="1" required>
                 <button type="button" onclick="removeItemRow(this)">❌</button>
             </div>
         </div>
-        <button type="button" onclick="addItemRow()">➕ 상품 추가</button><br /><br />
+        <button type="button" onclick="addItemRow()">➕ 상품 추가</button><br><br>
         <button type="submit">주문 생성</button>
     </form>
     <div id="createOrderResult"></div>
 </section>
 
 <!-- 주문 상품 취소 -->
-<section>
+<section style="margin-bottom: 30px;">
     <h2>2. 주문 상품 취소</h2>
     <form id="cancelOrderForm">
-        <label>주문 ID:</label>
-        <input type="number" name="orderId" required />
-        <label>상품 ID:</label>
-        <input type="number" name="itemId" required />
+        주문 ID: <input type="number" name="orderId" required>
+        상품 ID: <input type="number" name="itemId" required>
         <button type="submit">상품 취소</button>
     </form>
     <div id="cancelOrderResult"></div>
@@ -57,8 +66,7 @@
 <section>
     <h2>3. 주문 조회</h2>
     <form id="getOrderForm">
-        <label>주문 ID:</label>
-        <input type="number" name="orderId" required />
+        주문 ID: <input type="number" name="orderId" required>
         <button type="submit">주문 조회</button>
     </form>
     <div id="getOrderResult"></div>
@@ -70,10 +78,8 @@
         const row = document.createElement('div');
         row.className = 'item-row';
         row.innerHTML = `
-            <label>상품 ID:</label>
-            <input type="number" name="itemId" required />
-            <label>수량:</label>
-            <input type="number" name="quantity" value="1" min="1" required />
+            상품 ID: <input type="number" name="itemId" required>
+            수량: <input type="number" name="quantity" value="1" required>
             <button type="button" onclick="removeItemRow(this)">❌</button>
         `;
         itemList.appendChild(row);
@@ -83,150 +89,75 @@
         button.parentNode.remove();
     }
 
-    // 주문 생성 결과 렌더링 (CreateOrderResponse DTO 기반)
-    function renderCreateOrderResult(data, error) {
-        const container = document.getElementById('createOrderResult');
-        container.innerHTML = '';
+    function renderTable(data, containerId) {
+        const container = document.getElementById(containerId);
+        container.innerHTML = ''; // 초기화
 
-        if (error) {
-            container.innerHTML = `<p class="error">❌ ${error}</p>`;
-            return;
+        const table = document.createElement('table');
+        const tbody = document.createElement('tbody');
+
+        for (const [key, value] of Object.entries(data)) {
+            const row = document.createElement('tr');
+
+            const keyCell = document.createElement('th');
+            keyCell.textContent = key;
+
+            const valueCell = document.createElement('td');
+            valueCell.textContent = typeof value === 'object' ? JSON.stringify(value, null, 2) : value;
+
+            row.appendChild(keyCell);
+            row.appendChild(valueCell);
+            tbody.appendChild(row);
         }
 
-        // 성공 시 orderId, totalPrice, orderItemList 출력
-        let html = `<p class="success">✅ 주문이 생성되었습니다. 주문번호: <strong>${data.orderId}</strong></p>`;
-        html += `<p>총 주문 금액: <strong>${data.totalPrice.toLocaleString()}원</strong></p>`;
-
-        if (data.orderItemList && data.orderItemList.length > 0) {
-            html += `<table>
-                <thead>
-                    <tr>
-                        <th>상품 ID</th>
-                        <th>상품명</th>
-                        <th>수량</th>
-                        <th>실구매금액</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-            data.orderItemList.forEach(item => {
-                const total = item.purchasePrice * item.quantity;
-                html += `<tr>
-                    <td>${item.itemId}</td>
-                    <td>${item.name || '-'}</td>
-                    <td>${item.quantity}</td>
-                    <td>${item.purchasePrice.toLocaleString()}원</td>
-                </tr>`;
-            });
-            html += `</tbody></table>`;
-        }
-        container.innerHTML = html;
+        table.appendChild(tbody);
+        container.appendChild(table);
+        container.className = 'success';
     }
 
-    // 주문 상품 취소 결과 렌더링 (CancelOrderItemResponse DTO 기반)
-    function renderCancelOrderResult(data, error) {
-        const container = document.getElementById('cancelOrderResult');
+    function renderError(errorData, containerId) {
+        const container = document.getElementById(containerId);
         container.innerHTML = '';
 
-        if (error) {
-            container.innerHTML = `<p class="error">❌ ${error}</p>`;
-            return;
+        const table = document.createElement('table');
+        const tbody = document.createElement('tbody');
+
+        for (const [key, value] of Object.entries(errorData)) {
+            const row = document.createElement('tr');
+            const keyCell = document.createElement('th');
+            keyCell.textContent = key;
+
+            const valueCell = document.createElement('td');
+            valueCell.textContent = typeof value === 'object' ? JSON.stringify(value, null, 2) : value;
+
+            row.appendChild(keyCell);
+            row.appendChild(valueCell);
+            tbody.appendChild(row);
         }
 
-        let html = `<p class="success">✅ 상품이 취소되었습니다.</p>`;
-        html += `<table>
-            <thead>
-                <tr>
-                    <th>상품 ID</th>
-                    <th>상품명</th>
-                    <th>가격</th>
-                    <th>할인 금액</th>
-                    <th>재고</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>${data.itemId}</td>
-                    <td>${data.name}</td>
-                    <td>${data.price.toLocaleString()}원</td>
-                    <td>${data.discountPrice.toLocaleString()}원</td>
-                    <td>${data.stock}</td>
-                </tr>
-            </tbody>
-        </table>`;
-
-        html += `<p>환불 금액: <strong>${data.canceledPrice.toLocaleString()}원</strong></p>`;
-        html += `<p>취소 후 남은 주문 총 금액: <strong>${data.totalPrice.toLocaleString()}원</strong></p>`;
-
-        container.innerHTML = html;
+        table.appendChild(tbody);
+        container.appendChild(table);
+        container.className = 'error';
     }
 
-    // 주문 조회 결과 렌더링 (GetOrderResponse DTO 기반)
-    function renderGetOrderResult(data, error) {
-        const container = document.getElementById('getOrderResult');
-        container.innerHTML = '';
-
-        if (error) {
-            container.innerHTML = `<p class="error">❌ ${error}</p>`;
-            return;
-        }
-
-        let html = `<p>주문번호: <strong>${data.orderId}</strong></p>`;
-        html += `<p>총 주문 금액: <strong>${data.totalPrice.toLocaleString()}원</strong></p>`;
-
-        if (data.orderItemList && data.orderItemList.length > 0) {
-            html += `<table>
-                <thead>
-                    <tr>
-                        <th>상품 ID</th>
-                        <th>상품명</th>
-                        <th>판매가격</th>
-                        <th>할인금액</th>
-                        <th>수량</th>
-                        <th>실구매금액</th>
-                        <th>주문 상태</th>
-                    </tr>
-                </thead>
-                <tbody>`;
-            data.orderItemList.forEach(item => {
-                html += `<tr>
-                    <td>${item.itemId}</td>
-                    <td>${item.name}</td>
-                    <td>${item.price.toLocaleString()}원</td>
-                    <td>${item.discountPrice.toLocaleString()}원</td>
-                    <td>${item.quantity}</td>
-                    <td>${item.purchasePrice.toLocaleString()}원</td>
-                    <td>${item.orderStatus}</td>
-                </tr>`;
-            });
-            html += `</tbody></table>`;
-        } else {
-            html += `<p>주문 상품이 없습니다.</p>`;
-        }
-
-        container.innerHTML = html;
-    }
-
-    // 에러 핸들링 포함 fetch 함수
-    async function fetchJsonWithErrorHandling(url, options) {
+    // fetch wrapper
+    async function fetchJson(url, options, containerId) {
         try {
             const res = await fetch(url, options);
+            const data = await res.json();
+
             if (!res.ok) {
-                let errJson;
-                try {
-                    errJson = await res.json();
-                    throw new Error(errJson.message || '알 수 없는 오류가 발생했습니다.');
-                } catch {
-                    throw new Error('서버 오류가 발생했습니다.');
-                }
+                renderError(data, containerId);
+            } else {
+                renderTable(data, containerId);
             }
-            return await res.json();
         } catch (err) {
-            return { error: err.message };
+            renderError({ error: '네트워크 오류 또는 서버가 응답하지 않음' }, containerId);
         }
     }
 
-    // 주문 생성 이벤트
-    document.getElementById('createOrderForm').addEventListener('submit', async e => {
+    // 주문 생성
+    document.getElementById('createOrderForm').addEventListener('submit', function (e) {
         e.preventDefault();
         const itemRows = document.querySelectorAll('#itemList .item-row');
         const orderItemList = [];
@@ -239,57 +170,35 @@
             }
         });
 
-        const data = { orderItemList };
-        const result = await fetchJsonWithErrorHandling('/orders', {
+        fetchJson('/orders', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-
-        if (result.error) {
-            renderCreateOrderResult(null, result.error);
-        } else {
-            renderCreateOrderResult(result);
-        }
+            body: JSON.stringify({ orderItemList })
+        }, 'createOrderResult');
     });
 
-    // 주문 상품 취소 이벤트
-    document.getElementById('cancelOrderForm').addEventListener('submit', async e => {
+    // 주문 상품 취소
+    document.getElementById('cancelOrderForm').addEventListener('submit', function (e) {
         e.preventDefault();
-        const form = e.target;
-        const orderId = form.orderId.value;
-        const itemId = form.itemId.value;
+        const orderId = parseInt(e.target.orderId.value);
+        const itemId = parseInt(e.target.itemId.value);
 
-        const data = {
-            orderId: parseInt(orderId),
-            itemId: parseInt(itemId)
-        };
-
-        const result = await fetchJsonWithErrorHandling(`/orders/${orderId}/cancel/${itemId}`, {
+        fetchJson(`/orders/${orderId}/cancel/${itemId}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        });
-
-        if (result.error) {
-            renderCancelOrderResult(null, result.error);
-        } else {
-            renderCancelOrderResult(result);
-        }
+            body: JSON.stringify({ orderId, itemId })
+        }, 'cancelOrderResult');
     });
 
-    // 주문 조회 이벤트
-    document.getElementById('getOrderForm').addEventListener('submit', async e => {
+    // 주문 조회
+    document.getElementById('getOrderForm').addEventListener('submit', function (e) {
         e.preventDefault();
-        const orderId = e.target.orderId.value;
+        const orderId = parseInt(e.target.orderId.value);
 
-        const result = await fetchJsonWithErrorHandling(`/orders/${orderId}`);
-
-        if (result.error) {
-            renderGetOrderResult(null, result.error);
-        } else {
-            renderGetOrderResult(result);
-        }
+        fetchJson(`/orders/${orderId}`, {
+            method: 'GET',
+            headers: { 'Accept': 'application/json' }
+        }, 'getOrderResult');
     });
 </script>
 </body>
