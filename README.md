@@ -81,6 +81,9 @@
 - `OrderEntity`: 주문 정보
 - `OrderItemEntity`: 주문 내 개별 상품
 
+  ![image](https://github.com/user-attachments/assets/b49c56fa-ee97-4a51-baf0-0b98eac1825c)
+
+
 - 하나의 주문(`Order`)은 여러 개의 주문상품(`OrderItem`)을 포함
 - 하나의 상품(`Item`)은 여러 주문에 포함
 - Order와 Item은 **N:M(다대다)** 관계에 해당하며, 이 관계를 명시적으로 표현하기 위해 OrderItem 엔티티를 **연결 테이블**(연결 엔티티)로 설정
