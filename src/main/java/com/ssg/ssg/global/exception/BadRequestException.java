@@ -13,4 +13,10 @@ public class BadRequestException extends BaseException{
     public BadRequestException(String message) {
         super(HTTP_STATUS, message);
     }
+
+    public BadRequestException(ErrorCode errorCode, String message) {
+        super(errorCode, HTTP_STATUS, message);
+    }
+
+
 }

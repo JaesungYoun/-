@@ -17,6 +17,12 @@ public class BaseException extends RuntimeException {
         this.httpStatus = httpStatus;
     }
 
+    protected BaseException(ErrorCode errorCode, HttpStatus httpStatus, String message) {
+        super(message);
+        this.errorCode = errorCode;
+        this.httpStatus = httpStatus;
+    }
+
     protected BaseException(HttpStatus httpStatus, String message) {
         super(message);
         this.httpStatus = httpStatus;
