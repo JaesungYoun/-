@@ -26,7 +26,7 @@ public class OrderController implements OrderControllerDoc {
         return ResponseEntity.ok(orderService.createOrder(request));
     }
 
-    @PostMapping("/{orderId}/cancel/{productId}")
+    @PostMapping("/{orderId}/cancel/{itemId}")
     public ResponseEntity<CancelOrderItemResponse> cancelOrderItem(@RequestBody @Valid CancelOrderItemRequest request) throws InterruptedException {
         return ResponseEntity.ok(orderServiceFacade.cancelOrderItem(request));
     }
