@@ -40,7 +40,7 @@ public class ItemEntity {
 
     // 재고 차감 및 복구
     public void decreaseStock(Integer quantity) {
-        if (this.stock < quantity) throw new BadRequestException(ErrorCode.OUT_OF_STOCK);
+        if (this.stock < quantity) throw new BadRequestException(name + "의 " + ErrorCode.OUT_OF_STOCK.getMessage());
         this.stock -= quantity;
     }
 
