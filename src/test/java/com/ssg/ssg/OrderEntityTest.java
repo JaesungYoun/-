@@ -19,8 +19,8 @@ class OrderEntityTest {
 
         ItemEntity item2 = new ItemEntity(1000000002L, "신라면 멀티팩", 4200, 500, 500, 1L);
 
-        OrderItemEntity orderItem1 = OrderItemEntity.createOrderItem(item1, 10, item1.getPurchasePrice());
-        OrderItemEntity orderItem2 = OrderItemEntity.createOrderItem(item2, 20, item2.getPurchasePrice());
+        OrderItemEntity orderItem1 = OrderItemEntity.createOrderItem(OrderEntity.createEmptyOrder(), item1, 10, item1.getPurchasePrice());
+        OrderItemEntity orderItem2 = OrderItemEntity.createOrderItem(OrderEntity.createEmptyOrder(), item2, 20, item2.getPurchasePrice());
 
         List<OrderItemEntity> orderItems = new ArrayList<>();
         orderItems.add(orderItem1);
@@ -49,8 +49,8 @@ class OrderEntityTest {
         ItemEntity item2 = new ItemEntity(1000000002L, "신라면 멀티팩", 4200, 500, 500, 1L);
 
         // 주문 상품 생성
-        OrderItemEntity orderItem1 = OrderItemEntity.createOrderItem(item1, 10, item1.getPurchasePrice());
-        OrderItemEntity orderItem2 = OrderItemEntity.createOrderItem(item2, 20, item2.getPurchasePrice());
+        OrderItemEntity orderItem1 = OrderItemEntity.createOrderItem(OrderEntity.createEmptyOrder(), item1, 10, item1.getPurchasePrice());
+        OrderItemEntity orderItem2 = OrderItemEntity.createOrderItem(OrderEntity.createEmptyOrder(), item2, 20, item2.getPurchasePrice());
 
         List<OrderItemEntity> orderItems = new ArrayList<>();
         orderItems.add(orderItem1);

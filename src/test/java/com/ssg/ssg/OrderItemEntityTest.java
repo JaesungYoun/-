@@ -24,7 +24,7 @@ class OrderItemEntityTest {
         Integer expectedPurchasePrice = quantity * (item.getPrice() - item.getDiscountPrice());
 
         /** When */
-        OrderItemEntity orderItem = OrderItemEntity.createOrderItem(item, quantity, item.getPurchasePrice());
+        OrderItemEntity orderItem = OrderItemEntity.createOrderItem(OrderEntity.createEmptyOrder(), item, quantity, item.getPurchasePrice());
 
         /** Then */
         assertThat(orderItem.getItem()).isEqualTo(item);

@@ -37,6 +37,11 @@ public class OrderEntity {
         order.calculateTotalPrice(); // 주문 전체 금액 계산
         return order;
     }
+
+    // 비어있는 주문 생성(주문 상품을 주문에 넣기 전 초기화 용도)
+    public static OrderEntity createEmptyOrder() {
+        return new OrderEntity();
+    }
     
     // 주문의 전체 금액 계산
     public void calculateTotalPrice() {

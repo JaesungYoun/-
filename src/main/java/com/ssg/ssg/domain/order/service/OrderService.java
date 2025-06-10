@@ -68,7 +68,7 @@ public class OrderService {
             Integer purchasePrice = item.getPurchasePrice();
 
             // 주문 상품 엔티티 생성
-            OrderItemEntity orderItem = OrderItemEntity.createOrderItem(item, dto.getQuantity(), purchasePrice);
+            OrderItemEntity orderItem = OrderItemEntity.createOrderItem(OrderEntity.createEmptyOrder(), item, dto.getQuantity(), purchasePrice);
             // 리스트에 주문 상품 담기
             orderItems.add(orderItem);
         }
@@ -76,11 +76,11 @@ public class OrderService {
         // 주문 엔티티 생성
         OrderEntity order = OrderEntity.createOrder(orderItems);
 
-        // 주문 상품 리스트 저장
-        orderItemRepository.saveAll(orderItems);
-
         // 주문 저장
         orderRepository.save(order);
+
+        // 주문 상품 리스트 저장
+        orderItemRepository.saveAll(orderItems);
 
         return CreateOrderResponse.toOrderDto(order);
     }
