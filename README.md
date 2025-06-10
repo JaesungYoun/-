@@ -81,7 +81,8 @@
 - `OrderEntity`: 주문 정보
 - `OrderItemEntity`: 주문 내 개별 상품
 
-  ![image](https://github.com/user-attachments/assets/b49c56fa-ee97-4a51-baf0-0b98eac1825c)
+![image](https://github.com/user-attachments/assets/25bc7fe7-7374-4115-997c-9f36dbb6252f)
+
 
 
 - 하나의 주문(`Order`)은 여러 개의 주문상품(`OrderItem`)을 포함
