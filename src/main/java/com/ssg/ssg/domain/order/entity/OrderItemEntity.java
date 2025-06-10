@@ -4,6 +4,7 @@ import com.ssg.ssg.domain.order.enums.OrderStatus;
 import com.ssg.ssg.global.code.ErrorCode;
 import com.ssg.ssg.global.exception.BadRequestException;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
@@ -23,11 +24,13 @@ public class OrderItemEntity {
     private Long id;  // 주문 상품 id
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "order_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT), nullable = false)
+    @NotNull
     private OrderEntity order; // 주문
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "item_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
+    @JoinColumn(name = "item_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT), nullable = false)
+    @NotNull
     private ItemEntity item; // 상품
 
     @Column(name = "qty")
