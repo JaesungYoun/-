@@ -132,8 +132,9 @@ OrderItem은 각각 Order와 Item에 대해 **다대일(N:1)** 관계를 맺고 
 - 통합 테스트: 서비스 주요 기능 수행 후, 실제 DB와 DTO 값이 예상대로 동작하는지 검증하는 테스트
 - 기능별 단위 테스트: 각 기능의 동작을 개별적으로 확인하는 테스트
 
-  ConCurrencyTest : 재고 차감/복구 동시성 테스트
-  ItemEntityTest : Item 기능 테스트
-  OrderEntitytest : OrderEntity 기능 테스트
-  OrderItemEntityTest : OrderItemEntity 기능 테스트
-  OrderServiceTest : 트랜잭션 적용, 필수 API 테스트
+#### 테스트 클래스
+  - ConCurrencyTest : 재고 차감/복구 동시성 테스트
+  - ItemEntityTest : Item 기능 테스트
+  - OrderEntitytest : OrderEntity 기능 테스트
+  - OrderItemEntityTest : OrderItemEntity 기능 테스트
+  - OrderServiceTest : 트랜잭션 적용, 필수 API 테스트
